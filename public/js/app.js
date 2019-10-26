@@ -5,14 +5,18 @@ var fetch_wetaher = place => {
 
       if (data.error) {
         // document.getElementById("forecast").innerHTML = data.error
-        document.getElementById("forecast").textContent = data.error
+        document.getElementById("forecast").textContent = data.error;
       } else {
         document.getElementById("forecast").textContent =
           data.forecastData.summary +
           " Temperature: " +
           data.forecastData.temperature +
           " Chance of Rain: " +
-          data.forecastData.chanceofrain
+          data.forecastData.chanceofrain +
+          " Max Temp: " +
+          data.forecastData.temperatureMax +
+          " Min Temp: " +
+          data.forecastData.temperatureMin;
       }
     });
   });
