@@ -1,5 +1,3 @@
-console.log("Client Side js");
-
 var fetch_wetaher = place => {
   fetch("/weather-app?address=" + place).then(response => {
     response.json().then(data => {
