@@ -3,7 +3,8 @@ const path = require("path"),
   app = express(),
   hbs = require("hbs"),
   geocode = require("./utils/geocode.js").geocode,
-  forecast = require("./utils/forecast.js").forecast;
+  forecast = require("./utils/forecast.js").forecast,
+  port = process.env.PORT || 3000;
 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "../templates/views"));
@@ -42,18 +43,21 @@ app.get("/weather-app", (req, res) => {
     });
   }
   // @ts-ignore
-  geocode(req.query.address, (error, { latitude, longitude, location }={}) => {
-    if (error) {
-      return res.send({ error });
-    }
-    // @ts-ignore
-    forecast(latitude, longitude, (error, forecastData) => {
+  geocode(
+    req.query.address,
+    (error, { latitude, longitude, location } = {}) => {
       if (error) {
         return res.send({ error });
       }
-      res.send({ location, forecastData });
-    });
-  });
+      // @ts-ignore
+      forecast(latitude, longitude, (error, forecastData) => {
+        if (error) {
+          return res.send({ error });
+        }
+        res.send({ location, forecastData });
+      });
+    }
+  );
 });
 
 app.get("/help/*", (req, res) => {
@@ -68,4 +72,4 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(3000, () => console.log("Server Listening @3000"));
+app.listen(port, () => console.log("Server Listening @3000"));
