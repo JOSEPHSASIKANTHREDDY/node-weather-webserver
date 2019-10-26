@@ -45,6 +45,7 @@ app.get("/weather-app", (req, res) => {
   // @ts-ignore
   geocode(
     req.query.address,
+    // @ts-ignore
     (error, { latitude, longitude, location } = {}) => {
       if (error) {
         return res.send({ error });
